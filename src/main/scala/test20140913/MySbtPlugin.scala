@@ -1,5 +1,5 @@
 // It must be inside a package, can't be a top level object
-//package test20140913
+package test20140913
 
 import sbt._
 
@@ -11,6 +11,7 @@ object MySbtPlugin extends AutoPlugin {
   // content inside `autoImport` will be merged into sbt config
   object autoImport {
     lazy val hello = taskKey[Unit]("hello task from my plugin")
+    lazy val hello2 = taskKey[Unit]("hello task from my plugin2")
   }
 
   import autoImport._
@@ -34,8 +35,14 @@ object MySbtPlugin extends AutoPlugin {
 
   val helloSetting = hello := println("Hello from my plugin")
 
+  val helloSetting2 = hello2 := {
+    println("hello2, task result from another plugins:")
+    println(net.virtualvoid.sbt.graph.Plugin.dependencyTree.value)
+    println("=========================================")
+  }
+
   override def projectSettings = Seq(
-    helloSetting
+    helloSetting, helloSetting2
   )
 
 }
