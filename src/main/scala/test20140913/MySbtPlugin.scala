@@ -37,7 +37,7 @@ object MySbtPlugin extends AutoPlugin {
 
   val helloSetting2 = hello2 := {
     println("hello2, task result from another plugins:")
-    println(net.virtualvoid.sbt.graph.Plugin.dependencyTree.value)
+    println((net.virtualvoid.sbt.graph.Plugin.dependencyTree in Compile).value)
     println("=========================================")
   }
 
